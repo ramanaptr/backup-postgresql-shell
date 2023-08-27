@@ -1,15 +1,15 @@
 # AUTO BACKUP POSTGRESQL IN SHELL
 
-I've been made auto backup/dumb postgresql per-schema
+I've been made auto backup/dumb Postgresql per-schema
 
 ## Flow of backup_postgresql.sh
 1. Auto backup database all or per-schema files
-2. Auto zip with password (secure the data first)
-3. Auto upload to your S3 Storage
-4. Auto send to your email you set
+2. Auto zip with password (secure)
+3. Auto upload to your AWS S3 Storage
+4. Auto-send link AWS S3 to the email you set
 
-## To achive this, you must install 5 things
-### Example for mac using brew 
+## To achieve this, you must install 5 things
+### Example for Mac using brew 
 
 1. Install zip
 ```
@@ -47,7 +47,7 @@ pg_dump_path="../../pg_dump"
 3. Change to your **PSQL Connection**
 ```
 # Database connection details
-backup_all=false # false is mean backup will split per-schema
+backup_all=false # false means backup will split per-schema
 db_host="http://localhost"
 db_port="5432"
 db_username="postgres"
@@ -55,7 +55,7 @@ db_name="your_db"
 db_password="your_db_password"
 ``` 
 
-4. Configure to your **SMTP Credentials**
+4. Configure your **SMTP Credentials**
 ```
 # Sender Email
 smtp_host="smtp.gmail.com"
@@ -69,12 +69,12 @@ smtp_password="your_mail_password"
 recipient_email="yourmail@gmail.com"
 ``` 
 
-5. Configure to your **SMTP Credentials**
+5. Configure your **SMTP Credentials**
 ```
 # AWS credentials
-export AWS_ACCESS_KEY_ID=""
-export AWS_SECRET_ACCESS_KEY=""
-export AWS_DEFAULT_REGION=""
+export AWS_ACCESS_KEY_ID="access_key"
+export AWS_SECRET_ACCESS_KEY="secret_key"
+export AWS_DEFAULT_REGION="aws_region"
 
 s3_bucket=""
 s3_key="$folder_name/$uuid-$(basename ${zip_file})"
@@ -92,7 +92,7 @@ backup_dir="./$folder_name"
 crontab -e
 ```
 ```
-# Script will running every 1 AM
+# Script will be running every 1 AM
 0 1 * * * bash /home/your_user_name/backup_postgresql.sh
 ```
 to exit, esc press : and wq
@@ -110,5 +110,5 @@ bash backup_postgresql.sh
 ## Made with ❤️ From Bali, Indonesia
 ### ramanaptr 
 ```
-please to star this if you like and happy 🤙
+please star this if you like and be happy 🤙
 ```
