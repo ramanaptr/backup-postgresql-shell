@@ -2,7 +2,7 @@
 set -e
 
 # ===============================================================
-# ======= 🔥 @AUHTOR: https://instagram.com/ramanaptr 🔥 =========
+# ==== 🔥 @AUHTOR: https://www.linkedin.com/in/ramanaptr 🔥 =====
 # ================ Created since 27-Aug-2023 ====================
 # ===============================================================
 # Please prepare "zip", "expect", "aws cli", and "sendemail" on your server to run this script 👍
@@ -119,7 +119,7 @@ EOD
 
 # Upload backup to S3
 echo ""
-echo "Created by https://instagram.com/ramanaptr"
+echo "Created by https://www.linkedin.com/in/ramanaptr"
 echo "I'm glad you use the tool I made. Hope you always happy 😊"
 echo ""
 
