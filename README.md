@@ -60,8 +60,8 @@ db_password="your_db_password"
 # Sender Email
 smtp_host="smtp.gmail.com"
 smtp_port="587"
-smtp_use_tls="-S smtp-use-starttls"
-smtp_auth="-S smtp-auth=login"
+....
+....
 smtp_user="yourmail@gmail.com"
 smtp_password="your_mail_password"
 
