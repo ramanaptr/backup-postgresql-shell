@@ -6,10 +6,12 @@ set -e
 # ================ Created since 27-Aug-2023 ====================
 # ===============================================================
 # Please prepare "zip", "expect", "aws cli", and "sendemail" on your server to run this script 👍
-# Remember to change of path "psql_path" and "pg_dump_path"
+# Remember to change of path "psql_path" and "pg_dump_path" if which command is not working
 
-# Path to the fullchain.pem file from Certbot
-# certbot_fullchain=""
+
+# ===============================================================
+# ==================== DEFAULT VARIABLE AREA ====================
+# ===============================================================
 
 # Default Get the current timestamp
 timestamp=$(date +'%d-%m-%Y_%H_%M_%S')
@@ -21,49 +23,51 @@ folder_name="backup-database-production"
 base_filename="backup"
 extension=".sql"
 zip_name="$folder_name-$timestamp.zip"
-zip_password="your_password"
 backup_dir="./$folder_name"
+zip_file="./$zip_name"
 
-# ===============================================================
-# ======================= VARIABLE AREA =========================
-# ===============================================================
+# Default Set PSQL and PG DUMP
+psql_path=$(which psql)
+pg_dump_path=$(which pg_dump)
 
-# CENTOS 7 ENV FOR PSQL PATH
-# pg_dump_path="/usr/bin/pg_dump"
-# psql_path="/usr/bin/psql"
-
-# MAC ENV FOR PSQL PATH
-psql_path="/usr/local/bin/psql"
-pg_dump_path="/usr/local/Cellar/postgresql@14/14.9/bin/pg_dump"
-
-# Database connection details
-backup_all=false # false is mean backup will split per-schema
-db_host="http://localhost"
-db_port="5432"
-db_username="postgres"
-db_name="your_db"
-db_password="your_db_password"
-
-# Sender Email
-smtp_host="smtp.gmail.com"
-smtp_port="587"
+# Default Set For SMTP
 smtp_use_tls="-S smtp-use-starttls"
 smtp_auth="-S smtp-auth=login"
+
+# Default S3 Storage
+s3_key="$folder_name/$uuid-$(basename ${zip_file})"
+
+# ===============================================================
+# ================= CHANGEABLE VARIABLE AREA ====================
+# ===============================================================
+
+# ZIP Configuration
+zip_password="your_password"
+
+# Database connection details
+backup_all=false # false means backup will split per-schema
+db_host="http://localhost"
+db_port="5432"
+db_username="db_username"
+db_name="db_name"
+db_password="db_password"
+
+# Sender Email
 smtp_user="yourmail@gmail.com"
 smtp_password="your_mail_password"
+smtp_host="smtp.gmail.com"
+smtp_port="587"
 
-# Recipient Email
+# Recipient Email Where do you want to send the link to the S3 storage
 recipient_email="yourmail@gmail.com"
 
 # AWS credentials
-export AWS_ACCESS_KEY_ID=""
-export AWS_SECRET_ACCESS_KEY=""
-export AWS_DEFAULT_REGION=""
+export AWS_ACCESS_KEY_ID="aws_key"
+export AWS_SECRET_ACCESS_KEY="aws_secret_key"
+export AWS_DEFAULT_REGION="aws_region"
 
 # S3 bucket details
-zip_file="./$zip_name"
-s3_bucket=""
-s3_key="$folder_name/$uuid-$(basename ${zip_file})"
+s3_bucket="your_bucket_storage"
 
 # ===============================================================
 # ======================= PRE BACKUP AREA =======================
@@ -72,7 +76,7 @@ s3_key="$folder_name/$uuid-$(basename ${zip_file})"
 mkdir -p "$backup_dir"
 
 # ===============================================================
-# ======================= BACKUP AREA ===========================
+# ================== BACKUP PROCESS AREA ========================
 # ===============================================================
 
 # Set the PostgreSQL password
@@ -104,7 +108,7 @@ fi
 unset PGPASSWORD
 
 # ===============================================================
-# =================== ZIP AND SEND FILE AREA ====================
+# ================ ZIP, UPLOAD AND SEND FILE AREA ===============
 # ===============================================================
 
 # Use expect to automate/bypass entering the zip password
@@ -120,10 +124,10 @@ EOD
 # Upload backup to S3
 echo ""
 echo "Created by https://www.linkedin.com/in/ramanaptr"
-echo "I'm glad you use the tool I made. Hope you always happy 😊"
+echo "I'm glad you use the tool I made. Hope you are always happy 😊"
 echo ""
 
-echo "Are you already install \"brew install awscli\" ?"
+echo "Have you already installed \"brew install awscli\" ?"
 aws s3 cp ${zip_file} s3://${s3_bucket}/${s3_key} --acl public-read
 echo "Removing $zip_file and $backup_dir"
 rm -rf $zip_file
@@ -142,9 +146,9 @@ email_headers="MIME-Version: 1.0\nContent-Type: text/html; charset=UTF-8\n"
 # Construct the email data
 email_data="$email_headers\n$email_content"
 
-# Use sendmail to send the email
+# Use sendemail to send the email
 echo ""
-echo "Are you already install \"brew install sendemail\" ?"
+echo "Have you already installed \"brew install sendemail\" ?"
 echo -e "$email_data" | sendemail -f $smtp_user -t $recipient_email -u $email_subject -m $email_body -s $smtp_host:$smtp_port -xu $smtp_user -xp $smtp_password -o tls=yes
 
 echo ""
