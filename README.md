@@ -79,7 +79,13 @@ backup_dir="./$folder_name"
 ```
 
 ## Final Configuration
-1. Setting your cronjob (Example for Centos 7)
+
+1. Give Permission To Give Flexibility
+```
+chmod +x backup_postgresql.sh
+```
+
+2. Setting your cronjob (Example for Centos 7)
 ```
 crontab -e
 ```
@@ -87,9 +93,9 @@ crontab -e
 # Script will be running every 1 AM
 0 1 * * * bash /home/your_user_name/backup_postgresql.sh
 ```
-To exit, press "esc" press ":" and "wq"
+To exit, press "ESC" press ":" and "wq"
 
-2. Verify your cronjob settings (Example for Centos 7)
+3. Verify your cronjob settings (Example for Centos 7)
 ```
 crontab -l 
 ```
