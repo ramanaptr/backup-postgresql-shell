@@ -38,46 +38,38 @@ brew install sendemail
 zip_password="your_password"
 ``` 
 
-2. Change to your **PSQL** Path
-```
-psql_path="../../psql"
-pg_dump_path="../../pg_dump"
-``` 
-
-3. Change to your **PSQL Connection**
+2. Change to your **PSQL Connection**
 ```
 # Database connection details
 backup_all=false # false means backup will split per-schema
 db_host="http://localhost"
 db_port="5432"
-db_username="postgres"
-db_name="your_db"
-db_password="your_db_password"
+db_username="db_username"
+db_name="db_name"
+db_password="db_password"
+``` 
+
+3. Configure your **SMTP Credentials**
+```
+# Sender Email
+smtp_user="yourmail@gmail.com"
+smtp_password="your_mail_password"
+smtp_host="smtp.gmail.com"
+smtp_port="587"
+
+# Recipient Email Where do you want to send the link to the S3 storage
+recipient_email="yourmail@gmail.com"
 ``` 
 
 4. Configure your **SMTP Credentials**
 ```
-# Sender Email
-smtp_host="smtp.gmail.com"
-smtp_port="587"
-....
-....
-smtp_user="yourmail@gmail.com"
-smtp_password="your_mail_password"
-
-# Recipient Email
-recipient_email="yourmail@gmail.com"
-``` 
-
-5. Configure your **SMTP Credentials**
-```
 # AWS credentials
-export AWS_ACCESS_KEY_ID="access_key"
-export AWS_SECRET_ACCESS_KEY="secret_key"
+export AWS_ACCESS_KEY_ID="aws_key"
+export AWS_SECRET_ACCESS_KEY="aws_secret_key"
 export AWS_DEFAULT_REGION="aws_region"
 
-s3_bucket=""
-s3_key="$folder_name/$uuid-$(basename ${zip_file})"
+# S3 bucket details
+s3_bucket="your_bucket_storage"
 ``` 
 
 ## Other configuration (Optional)
@@ -95,7 +87,7 @@ crontab -e
 # Script will be running every 1 AM
 0 1 * * * bash /home/your_user_name/backup_postgresql.sh
 ```
-to exit, esc press : and wq
+To exit, press "esc" press ":" and "wq"
 
 2. Verify your cronjob settings (Example for Centos 7)
 ```
