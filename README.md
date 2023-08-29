@@ -61,7 +61,7 @@ smtp_port="587"
 recipient_email="yourmail@gmail.com"
 ``` 
 
-4. Configure your **SMTP Credentials**
+4. Configure your **AWS Credentials**
 ```
 # AWS credentials
 export AWS_ACCESS_KEY_ID="aws_key"
