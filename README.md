@@ -1,6 +1,8 @@
 # AUTO BACKUP POSTGRESQL IN SHELL
 
-I've been made auto backup/dumb Postgresql per-schema
+I've been made auto backup/dumb Postgresql per-schema\
+\
+![alt text](https://github.com/ramanaptr/shell-auto-backup-postgresql/blob/main/thumbnail-image.png?raw=true)
 
 ## Flow of backup_postgresql.sh
 1. Auto backup database all or per-schema files
